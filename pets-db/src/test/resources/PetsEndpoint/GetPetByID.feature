@@ -1,8 +1,7 @@
-Feature:
-  Search for pet by ID
-
-  Background:
+Feature: Search for pet by ID
   As a customer searching for a pet
+  I want to search for pets using their ID
+  so that I can find pets using an ID
 
   @Happy
   Scenario Outline:
