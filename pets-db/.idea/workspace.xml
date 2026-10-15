@@ -1,4 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a1e9feaf-6173-4796-98b1-4389cefb1ecb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/framework/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/pet/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/storeorder/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/user/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/runner/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/steps/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/unit/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/PetsEndpoint/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/StoreOrderEndpoint/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/UsersEndpoint/placeholder" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3,
+  "fromUser": false
+}]]></component>
   <component name="ProjectId" id="3Kizq9dRlHKmzBd0MjxeVjazSHQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "dev",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.selected.package.jshint": "",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Game Dev\Projects\Sparta\Sparta-Project\pets-db\src\test\resources\PetsEndpoint" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10315.125" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.10315.125" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a1e9feaf-6173-4796-98b1-4389cefb1ecb" name="Changes" comment="" />
+      <created>1792055366790</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1792055366790</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
 </project>
