@@ -11,6 +11,7 @@ Feature: Search for pet by ID
     Then status code 200 should be returned
     And the returned name should be <name>
 
+
     Examples:
     | id | name |
     | 10 | "doggie" |
