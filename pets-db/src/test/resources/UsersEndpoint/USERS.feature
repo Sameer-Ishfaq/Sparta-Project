@@ -130,6 +130,7 @@ As a user of the Petstore
   |user03  |FalsePword3|
 
 
+
   @Happy
   Scenario: Login User when Incorrect Details are Entered
     Given I want to Logout of account
