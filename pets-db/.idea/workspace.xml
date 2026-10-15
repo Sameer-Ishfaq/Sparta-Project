@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1e9feaf-6173-4796-98b1-4389cefb1ecb" name="Changes" comment="" />
+    <list default="true" id="a1e9feaf-6173-4796-98b1-4389cefb1ecb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/framework/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/pet/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/storeorder/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/user/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/runner/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/steps/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/unit/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/PetsEndpoint/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/StoreOrderEndpoint/placeholder" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/UsersEndpoint/placeholder" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,9 +42,17 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "dev",
-    "kotlin-language-version-configured": "true"
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.selected.package.jshint": "",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Game Dev\Projects\Sparta\Sparta-Project\pets-db\src\test\resources\PetsEndpoint" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -53,5 +73,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
