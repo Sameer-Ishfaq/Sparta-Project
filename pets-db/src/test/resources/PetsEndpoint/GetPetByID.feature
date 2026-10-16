@@ -26,4 +26,4 @@ Feature: Search for pet by ID
       Examples:
       | id |
       | -1 |
-      | 12 |
+      | 99999999 |
