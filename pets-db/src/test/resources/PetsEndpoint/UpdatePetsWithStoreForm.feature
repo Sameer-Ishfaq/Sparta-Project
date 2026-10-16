@@ -9,13 +9,17 @@ Feature: Update Pet By ID
 
   @Happy
   Scenario: Attempt to update pet with a valid ID
-    When I try to update pet ID "1" with name "Buddy" and status "available"
+    When I try to update pet ID 1 with name "Buddy" and status "available"
     Then I should get a 200 response code
     And pet ID 1 should have the name "Buddy"
     And pet ID 1 should have the status "available"
 
   @Sad
   Scenario: Attempt to update pet with an invalid ID
-    When I try to update pet ID "invalid" with name "Buddy" and status "available"
+    When I try to update pet ID "INVALID" with name "Buddy" and status "available"
     Then I should get a 400 response code
-    And I should get an "Invalid pet value" message
+    And I should get an "Input error: unable to convert input to io.swagger.petstore.model.Pet" message
+
+    Scenario: Attempt to update non-existent pet
+      When I try to update pet ID -999 with name "Buddy" and status "available"
+      Then I should get a 404 response code
