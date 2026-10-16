@@ -1,79 +1,115 @@
 package com.sparta.pets.steps;
 
-import com.sparta.pets.util.PetsAPIConfig;
-import io.cucumber.java.BeforeAll;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 
+import java.util.Map;
+
+/**
+ * The "details", "http code" and "user created" steps are shared with CreateUserList.feature
+ * (and "I should get http code {int}" with LoginUser.feature and UpdateUserReference.feature),
+ * so they work on the usernames and response held in {@link UserContext}.
+ */
 public class UserCreateStepdefs {
 
-    private static PetsAPIConfig config;
+    private final UserContext context;
 
-    // TODO: store the responses from the one-off API calls here
-    private static Response createUserResponse;
-
-    private String username;
-
-    @BeforeAll
-    public static void setup() {
-        config = new PetsAPIConfig();
-        config.LoadFromFile();
-        RestAssured.baseURI = config.GetProperty("pets.uri"); // adjust to your config class
-        // TODO: call the API once here and store the response(s)
+    public UserCreateStepdefs(UserContext context) {
+        this.context = context;
     }
 
     // ---------- @Happy ----------
 
     @Given("I Want to Create a User with username {word}")
     public void iWantToCreateAUserWithUsername(String username) {
-        throw new PendingException();
+        context.getUsernames().add(username);
     }
 
     @When("I add a valid details")
     public void iAddAValidDetails() {
-        throw new PendingException();
+        long id = System.currentTimeMillis();
+        for (String username : context.getUsernames()) {
+            context.getUsers().add(Map.of(
+                    "id", id++,
+                    "username", username,
+                    "firstName", "Test",
+                    "lastName", "User",
+                    "email", username + "@example.com",
+                    "password", "Password123",
+                    "phone", "07123456789",
+                    "userStatus", 1));
+        }
     }
 
-    // Negative lookahead stops this matching the createdWithList endpoint
-    @And("^I post to /user/(?!createdWithList)(.+)$")
-    public void iPostToUser(String username) {
-        throw new PendingException();
+    // Negative lookahead stops this matching the createdWithList endpoint.
+    // Petstore creates users with POST /user (POST /user/{username} returns 405),
+    // so the username in the step text is descriptive only - it is sent in the body.
+    @And("^I post to /user/(?!createdWithList).+$")
+    public void iPostToUser() {
+        context.setResponse(context.request()
+                .contentType(ContentType.JSON)
+                .body(context.getUsers().get(0))
+                .when()
+                .post("/user"));
     }
 
     @Then("I should get http code {int}")
     public void iShouldGetHttpCode(int code) {
-        throw new PendingException();
+        MatcherAssert.assertThat(context.getResponse().statusCode(), Matchers.is(code));
     }
 
     @And("I should have a new user created")
     public void iShouldHaveANewUserCreated() {
-        throw new PendingException();
+        for (Map<String, Object> user : context.getUsers()) {
+            Response getResponse = getUser((String) user.get("username"));
+            MatcherAssert.assertThat(getResponse.statusCode(), Matchers.is(200));
+            MatcherAssert.assertThat(getResponse.jsonPath().getString("username"), Matchers.is(user.get("username")));
+            MatcherAssert.assertThat(getResponse.jsonPath().getString("email"), Matchers.is(user.get("email")));
+        }
     }
 
     // ---------- @Sad ----------
 
     @Given("I want to create a user with the username {word}")
     public void iWantToCreateAUserWithTheUsername(String username) {
-        throw new PendingException();
+        context.getUsernames().add(username);
     }
 
     @When("I add invalid details")
     public void iAddInvalidDetails() {
-        throw new PendingException();
+        // Numeric fields sent as text, so the API cannot convert the body into a User
+        for (String username : context.getUsernames()) {
+            context.getUsers().add(Map.of(
+                    "id", "not-a-number",
+                    "username", username,
+                    "userStatus", "not-a-number"));
+        }
     }
 
     @Then("I should have an unexpected error")
     public void iShouldHaveAnUnexpectedError() {
-        throw new PendingException();
+        MatcherAssert.assertThat(context.getResponse().statusCode(), Matchers.is(400));
+        MatcherAssert.assertThat(context.getResponse().jsonPath().getString("message"), Matchers.containsString("Input error"));
     }
 
     @And("User should not be created")
     public void userShouldNotBeCreated() {
-        throw new PendingException();
+        // Petstore currently answers 500 rather than 404 for a missing user, so only rule out success
+        for (String username : context.getUsernames()) {
+            MatcherAssert.assertThat(getUser(username).statusCode(), Matchers.not(200));
+        }
+    }
+
+    private Response getUser(String username) {
+        return context.request()
+                .pathParam("username", username)
+                .when()
+                .get("/user/{username}");
     }
 }

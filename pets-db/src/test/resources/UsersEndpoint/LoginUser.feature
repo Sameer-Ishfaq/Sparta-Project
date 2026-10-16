@@ -12,10 +12,10 @@ Feature: Login user using user/login
     And I am able to access Account
 
     Examples:
-    |username|password|
-    |user01  |Test1235|
-    |user02  |Test1235|
-    |user03  |Test1235|
+    |username|password   |
+    |user1   |XXXXXXXXXXX|
+    |user2   |XXXXXXXXXXX|
+    |user3   |XXXXXXXXXXX|
 
   @Sad
     Scenario Outline: Login User when incorrect details Entered

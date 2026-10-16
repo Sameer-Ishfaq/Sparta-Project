@@ -11,9 +11,12 @@ Feature: Logout using user/logout
     And I should be logged out
 
   @Sad
-    Scenario: Logout user without permission
+    Scenario Outline: Logout user without permission
     Given I want to Logout of account <username>
     When I am not logged in as a user
     And I request GET user/Logout
     Then I get http code "default Unexpected failure"
 
+    Examples:
+      |username|
+      |user1   |

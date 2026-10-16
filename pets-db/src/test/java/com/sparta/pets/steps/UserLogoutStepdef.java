@@ -1,75 +1,80 @@
 package com.sparta.pets.steps;
 
-import com.sparta.pets.util.PetsAPIConfig;
-import io.cucumber.java.BeforeAll;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 
 public class UserLogoutStepdef {
 
-    private static PetsAPIConfig config;
+    // One of the users Petstore is seeded with (user1 - user10 all share this password)
+    private static final String SEEDED_USERNAME = "user1";
+    private static final String SEEDED_PASSWORD = "XXXXXXXXXXX";
 
-    // TODO: store the responses from the one-off API calls here
-    private static Response logoutLoggedInResponse;
-    private static Response logoutNotLoggedInResponse;
+    private final UserContext context;
 
-    private String username;
+    private Response logoutResponse;
 
-    @BeforeAll
-    public static void setup() {
-        config = new PetsAPIConfig();
-        config.LoadFromFile();
-        RestAssured.baseURI = config.GetProperty("pets.uri");
-        // TODO: call the API once here and store the response(s)
+    private String username = SEEDED_USERNAME;
+
+    public UserLogoutStepdef(UserContext context) {
+        this.context = context;
     }
 
     // ---------- @Happy ----------
 
     @Given("I want to Logout of account")
     public void iWantToLogoutOfAccount() {
-        throw new PendingException();
+        // Nothing to set up - logs out the default seeded user
     }
 
     @When("I am logged in as a user")
     public void iAmLoggedInAsAUser() {
-        throw new PendingException();
+        Response loginResponse = context.request()
+                .queryParam("username", username)
+                .queryParam("password", SEEDED_PASSWORD)
+                .when()
+                .get("/user/login");
+        MatcherAssert.assertThat("Could not log in before logging out", loginResponse.statusCode(), Matchers.is(200));
     }
 
-    // Regex used because "/" is an alternation character in Cucumber expressions
+    // Regex used because "/" is an alternation character in Cucumber expressions.
+    // The path is case-sensitive: /user/Logout returns 500, so the request uses /user/logout.
     @And("^I request GET user/Logout$")
     public void iRequestGetUserLogout() {
-        throw new PendingException();
+        logoutResponse = context.request()
+                .when()
+                .get("/user/logout");
     }
 
     @Then("I get http code {int}")
     public void iGetHttpCode(int code) {
-        throw new PendingException();
+        MatcherAssert.assertThat(logoutResponse.statusCode(), Matchers.is(code));
     }
 
     @And("I should be logged out")
     public void iShouldBeLoggedOut() {
-        throw new PendingException();
+        MatcherAssert.assertThat(logoutResponse.asString(), Matchers.containsString("User logged out"));
     }
 
     // ---------- @Sad ----------
 
     @Given("I want to Logout of account {word}")
     public void iWantToLogoutOfAccount(String username) {
-        throw new PendingException();
+        this.username = username;
     }
 
     @When("I am not logged in as a user")
     public void iAmNotLoggedInAsAUser() {
-        throw new PendingException();
+        // Deliberately no login request, so there is no session to log out of
     }
 
+    // "default Unexpected failure" is the Swagger docs' name for the catch-all error response
     @Then("I get http code {string}")
     public void iGetHttpCode(String message) {
-        throw new PendingException();
+        MatcherAssert.assertThat(message, logoutResponse.statusCode(), Matchers.greaterThanOrEqualTo(400));
     }
 }
