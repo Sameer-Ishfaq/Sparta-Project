@@ -3,14 +3,14 @@ Feature: User stories for /user/
 
 @Happy
 Scenario: Getting username that exists
-Given I am looking for a username that exists "<username>"
+Given I am looking for a username that exists "user1"
 When I enter a GET requests to /users/{username}
 And I should get a http code 200
 Then I should see details about the username: first name, last name, id, email, password, phone, user status
 
 @Sad
 Scenario Outline: Getting a username that does not exist
-Given No user exists with the name <username>
+Given No user exists with the name "<username>"
 When I send a GET request to /users/{username}
 Then I should a http code 404
 

@@ -5,31 +5,60 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 public class GetUserByUsernameStepdefs {
+    private static final String BASE_URI = "https://petstore3.swagger.io/api/v3";
+
+    private String username = "user1";
+    private Response response;
+
     @Given("I am looking for a username that exists {string}")
-    public void iAmLookingForAUsernameThatExists(String arg0) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iAmLookingForAUsernameThatExists(String username) {
+        this.username = username;
     }
 
     @When("I enter a GET requests to \\/users\\/\\{username}")
     public void iEnterAGETRequestsToUsersUsername() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        response = RestAssured
+                .given()
+                    .baseUri(BASE_URI)
+                    .pathParam("username",username)
+                .when()
+                    .get("/user/{username}");
     }
 
     @And("I should get a http code {int}")
     public void iShouldGetAHttpCode(int arg0) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        int actualHttpCode = response.statusCode();
+        assertThat(actualHttpCode,is(200));
     }
 
     @Then("I should see details about the username: first name, last name, id, email, password, phone, user status")
     public void iShouldSeeDetailsAboutTheUsernameFirstNameLastNameIdEmailPasswordPhoneUserStatus() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        response.prettyPrint();
+
+        assertThat(response.jsonPath().getString("username"), is(username));
+        assertThat(response.jsonPath().getString("firstName"), notNullValue());
+        assertThat(response.jsonPath().getString("lastName"), notNullValue());
+        assertThat(response.jsonPath().getString("lastName"), notNullValue());
+        assertThat(response.jsonPath().getString("id"), notNullValue());
+        assertThat(response.jsonPath().getString("email"), notNullValue());
+        assertThat(response.jsonPath().getString("password"),notNullValue());
+        assertThat(response.jsonPath().getString("phone"), notNullValue());
+        assertThat(response.jsonPath().getString("userStatus"), notNullValue());
     }
+
+
+
+
+
+
+
 
     @Given("No user exists with the name <username>")
     public void noUserExistsWithTheNameUsername() {
