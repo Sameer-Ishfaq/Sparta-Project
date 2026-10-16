@@ -132,7 +132,7 @@ As a user of the Petstore
 
 
   @Happy
-  Scenario: Login User when Incorrect Details are Entered
+  Scenario: Logout User
     Given I want to Logout of account
     When I am logged in as a user
     And I request GET user/Logout
