@@ -195,7 +195,7 @@ public class UpdateDeletePetStepdefs
         root.put("status", arg2);
 
         response = RestAssured.given().baseUri(config.GetProperty("pets.uri")).basePath(endpoint).accept(ContentType.JSON).contentType(ContentType.JSON).body(root.toJSONString()).put().thenReturn();
-        presp = response.as(GetPetResponse.class);
+        if (response.statusCode() == 200) presp = response.as(GetPetResponse.class);
     }
 
     @And("pet ID {int} should have the status {string}")
