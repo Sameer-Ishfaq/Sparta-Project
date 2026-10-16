@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1e9feaf-6173-4796-98b1-4389cefb1ecb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/framework/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/pet/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/storeorder/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sparta/pets/user/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/runner/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/steps/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/sparta/pets/unit/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/PetsEndpoint/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/StoreOrderEndpoint/placeholder" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/UsersEndpoint/placeholder" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/PetsEndpoint/placeholder" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +32,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "pets-endpoint",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.selected.package.jshint": "",
