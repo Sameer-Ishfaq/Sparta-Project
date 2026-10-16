@@ -3,7 +3,7 @@ Feature: User Stories for /user/
 
   @Happy
   Scenario Outline: Deleting an existing user
-    Given am logged in an existing user "<username"
+    Given am logged in an existing user "<username>"
     When I DELETE /user/{username} of "<username>"
     Then I should get a status code 200
 
