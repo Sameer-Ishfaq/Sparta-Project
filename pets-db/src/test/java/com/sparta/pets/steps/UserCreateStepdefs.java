@@ -22,6 +22,7 @@ public class UserCreateStepdefs {
     @BeforeAll
     public static void setup() {
         config = new PetsAPIConfig();
+        config.LoadFromFile();
         RestAssured.baseURI = config.GetProperty("pets.uri"); // adjust to your config class
         // TODO: call the API once here and store the response(s)
     }

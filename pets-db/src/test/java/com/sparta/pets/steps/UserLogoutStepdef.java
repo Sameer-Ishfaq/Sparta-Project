@@ -23,6 +23,7 @@ public class UserLogoutStepdef {
     @BeforeAll
     public static void setup() {
         config = new PetsAPIConfig();
+        config.LoadFromFile();
         RestAssured.baseURI = config.GetProperty("pets.uri");
         // TODO: call the API once here and store the response(s)
     }

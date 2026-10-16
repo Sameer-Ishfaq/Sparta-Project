@@ -1,5 +1,6 @@
 package com.sparta.pets.steps;
 
+import com.sparta.pets.util.PetsAPIConfig;
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -7,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -16,6 +18,7 @@ public class GetUserByUsernameStepdefs {
 
     private String username = "user1";
     private Response response;
+    private static PetsAPIConfig config;
 
     @Given("I am looking for a username that exists {string}")
     public void iAmLookingForAUsernameThatExists(String username) {
@@ -33,9 +36,9 @@ public class GetUserByUsernameStepdefs {
     }
 
     @And("I should get a http code {int}")
-    public void iShouldGetAHttpCode(int arg0) {
+    public void iShouldGetAHttpCode(int expectedHttpCode) {
         int actualHttpCode = response.statusCode();
-        assertThat(actualHttpCode,is(200));
+        assertThat(actualHttpCode,is(expectedHttpCode));
     }
 
     @Then("I should see details about the username: first name, last name, id, email, password, phone, user status")
@@ -44,7 +47,6 @@ public class GetUserByUsernameStepdefs {
 
         assertThat(response.jsonPath().getString("username"), is(username));
         assertThat(response.jsonPath().getString("firstName"), notNullValue());
-        assertThat(response.jsonPath().getString("lastName"), notNullValue());
         assertThat(response.jsonPath().getString("lastName"), notNullValue());
         assertThat(response.jsonPath().getString("id"), notNullValue());
         assertThat(response.jsonPath().getString("email"), notNullValue());
@@ -58,23 +60,23 @@ public class GetUserByUsernameStepdefs {
 
 
 
-
-
-    @Given("No user exists with the name <username>")
-    public void noUserExistsWithTheNameUsername() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @When("I send a GET request to \\/users\\/\\{username}")
-    public void iSendAGETRequestToUsersUsername() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
-
-    @Then("I should a http code {int}")
-    public void iShouldAHttpCode(int arg0) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
-    }
+//
+//
+//    @Given("No user exists with the name <username>")
+//    public void noUserExistsWithTheNameUsername() {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
+//
+//    @When("I send a GET request to \\/users\\/\\{username}")
+//    public void iSendAGETRequestToUsersUsername() {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
+//
+//    @Then("I should a http code {int}")
+//    public void iShouldAHttpCode(int arg0) {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
 }
