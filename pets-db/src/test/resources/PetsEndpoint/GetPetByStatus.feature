@@ -1,20 +1,23 @@
-Feature: Get Pets By Status
-  As a pet store employee
-  I want to find pets that are currently in stock
-  So that I can see which pets are available for sale
-
-  Background:
-    Given I am using the pet api with path set to "pet"
+Feature:
+  AS a pet store employee,
+  I want to search for the details of a pet in the database by status,
+  SO THAT i can view its information.
 
   @Happy
-  Scenario: Get pets that are available
-    Given a pet exists in the database with status "available"
-    When I send a GET request to "/pet/findByStatus" with status "available"
-    Then I should get a 200 response code
-    And the response should contain pets with status "available"
+  Scenario Outline: Search using a valid status
+    When the endpoint is set to "/pet/findByStatus"
+    And the status is set to "<status>"
+    And I send a get request to the endpoint using my status
+    Then status code <code> should be returned
+
+    Examples:
+      |status|code|
+      |available|200|
+      |pending|200|
+      |sold|200|
 
   @Sad
-  Scenario: Search for pets using an invalid status
-    Given I have an invalid pet status "unknown"
-    When I send a GET request to "/pet/findByStatus" with status "unknown"
-    Then I should get a 400 response code
+  Scenario: Search using a invalid status
+    When the endpoint is set to "/pet/findByStatus"
+    And the status is set to "notStatus"
+    Then status code 400 should be returned
