@@ -58,13 +58,13 @@ public class UpdateDeletePetStepdefs
         createPet(petId, "Pet To Delete", "available");
     }
 
-    @Given("a pet ID does not exist in the database")
-    public void aPetIdDoesNotExistInTheDatabase()
+    @Given("a pet ID - {int} - does not exist in the database")
+    public void aPetIdDoesNotExistInTheDatabase(int id)
     {
-        petId = 9999;
+        petId = id;
 
         Response lookupResponse = RestAssured.given()
-                .baseUri(baseUri())
+                .baseUri(config.GetProperty("pets.uri"))
                 .basePath(endpoint)
                 .pathParam("petId", petId)
                 .when()

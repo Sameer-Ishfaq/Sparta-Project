@@ -20,4 +20,5 @@ Feature:
   Scenario: Search using a invalid status
     When the endpoint is set to "/pet/findByStatus"
     And the status is set to "notStatus"
+    And I send a get request to the endpoint using my status
     Then status code 400 should be returned
