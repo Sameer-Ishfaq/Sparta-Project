@@ -1,14 +1,20 @@
-Feature:
-  AS a pet store employee,
-  I want to search for the details of a pet in the database by status,
-  SO THAT i can view its information.
+Feature: Get Pets By Status
+  As a pet store employee
+  I want to find pets that are currently in stock
+  So that I can see which pets are available for sale
+
+  Background:
+    Given I am using the pet api with path set to "pet"
 
   @Happy
-  Given i am searching for a pet that exists within the database,
-    When i send a GET request to /pet,
-    Then the response code should be 200
+  Scenario: Get pets that are available
+    Given a pet exists in the database with status "available"
+    When I send a GET request to "/pet/findByStatus" with status "available"
+    Then I should get a 200 response code
+    And the response should contain pets with status "available"
 
   @Sad
-  Given i am searching for a pet status that does not exist in the database
-    When i send as GET request to /pet/findByStatus with a pet not in db
-    Then HTTP status code should be 400 invalid status value
+  Scenario: Search for pets using an invalid status
+    Given I have an invalid pet status "unknown"
+    When I send a GET request to "/pet/findByStatus" with status "unknown"
+    Then I should get a 400 response code
