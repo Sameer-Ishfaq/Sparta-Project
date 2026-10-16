@@ -3,7 +3,7 @@ package com.sparta.pets.steps;
 import com.sparta.pets.pojo.GetPet.GetPetResponse;
 import com.sparta.pets.util.PetsAPIConfig;
 import io.cucumber.java.BeforeAll;
-import io.cucumber.java.en.And;
+import io.cucumber.java.PendingException;import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -48,7 +48,7 @@ public class PetStepdefs
         config = new PetsAPIConfig();
         config.LoadFromFile();
     }
-    @Given("I am searching for a pet using a valid ID - {int}")
+    @Given("I am searching for a pet using a valid ID {int}")
     public void iAmSearchingForAPetUsingAValidId(int id)
     {
         this.id = id;
@@ -81,7 +81,7 @@ public class PetStepdefs
         MatcherAssert.assertThat(presp.getName(), Matchers.is(name));
     }
 
-    @Given("I am searching for a pet using an invalid ID - {int}")
+    @Given("I am searching for a pet using an invalid ID {int}")
     public void iAmSearchingForAPetUsingAnInvalidId(int id)
     {
         this.id = id;
