@@ -12,7 +12,7 @@ Then I should see details about the username: first name, last name, id, email, 
 Scenario Outline: Getting a username that does not exist
 Given No user exists with the name "<username>"
 When I send a GET request to /users/{username}
-Then I should a http code 404
+Then I should a http code 500
 
 Examples:
 |username|

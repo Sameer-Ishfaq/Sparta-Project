@@ -55,28 +55,23 @@ public class GetUserByUsernameStepdefs {
         assertThat(response.jsonPath().getString("userStatus"), notNullValue());
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////
 
+    @Given("No user exists with the name {string}")
+    public void noUserExistsWithTheNameUsername(String username) {this.username = username;}
 
+    @When("I send a GET request to \\/users\\/\\{username}")
+    public void iSendAGETRequestToUsersUsername() {
+       response = RestAssured
+               .given()
+                    .baseUri(BASE_URI)
+               .when()
+                    .pathParam("username",username)
+               .get("user/{username}");
+    }
 
-
-
-//
-//
-//    @Given("No user exists with the name <username>")
-//    public void noUserExistsWithTheNameUsername() {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
-//
-//    @When("I send a GET request to \\/users\\/\\{username}")
-//    public void iSendAGETRequestToUsersUsername() {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
-//
-//    @Then("I should a http code {int}")
-//    public void iShouldAHttpCode(int arg0) {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
+    @Then("I should a http code {int}")
+    public void iShouldAHttpCode(int expectedHttpCode) {
+        assertThat(response.statusCode(), is(expectedHttpCode));
+    }
 }
