@@ -1,7 +1,9 @@
 package com.sparta.pets.steps;
 
+import com.sparta.pets.pojo.GetPet.GetPetResponse;
 import com.sparta.pets.util.PetsAPIConfig;
 import io.cucumber.java.BeforeAll;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,6 +13,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.json.simple.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -20,12 +23,12 @@ public class UpdateDeletePetStepdefs
 {
     private static final String UPDATED_NAME = "Buddy Updated";
     private static final String UPDATED_STATUS = "sold";
-    private static final AtomicLong NEXT_PET_ID = new AtomicLong(System.currentTimeMillis());
 
     private static PetsAPIConfig config;
+    private GetPetResponse presp;
 
     private String endpoint;
-    private long petId;
+    private int petId;
     private Response response;
 
     @BeforeAll
@@ -41,8 +44,8 @@ public class UpdateDeletePetStepdefs
         endpoint = path.startsWith("/") ? path : "/" + path;
     }
 
-    @Given("pet ID {long} exists")
-    public void petIdExists(long id)
+    @Given("pet ID {int} exists")
+    public void petIdExists(int id)
     {
         petId = id;
         createPet(petId, "Test Pet", "available");
@@ -51,14 +54,14 @@ public class UpdateDeletePetStepdefs
     @Given("a pet exists in the database with a valid ID")
     public void aPetExistsInTheDatabaseWithAValidId()
     {
-        petId = NEXT_PET_ID.incrementAndGet();
+        petId = 9999;
         createPet(petId, "Pet To Delete", "available");
     }
 
     @Given("a pet ID does not exist in the database")
     public void aPetIdDoesNotExistInTheDatabase()
     {
-        petId = NEXT_PET_ID.incrementAndGet();
+        petId = 9999;
 
         Response lookupResponse = RestAssured.given()
                 .baseUri(baseUri())
@@ -73,8 +76,8 @@ public class UpdateDeletePetStepdefs
                 Matchers.is(404));
     }
 
-    @When("I send a PUT request to update pet ID {long} with valid details")
-    public void iSendAPutRequestToUpdatePetIdWithValidDetails(long id)
+    @When("I send a PUT request to update pet ID {int} with valid details")
+    public void iSendAPutRequestToUpdatePetIdWithValidDetails(int id)
     {
         petId = id;
         response = RestAssured.given()
@@ -181,5 +184,48 @@ public class UpdateDeletePetStepdefs
     private String baseUri()
     {
         return config.GetProperty("pets.uri");
+    }
+
+    @When("I try to update pet ID {int} with name {string} and status {string}")
+    public void iTryToUpdatePetIDWithNameAndStatus(int arg0, String arg1, String arg2)
+    {
+        JSONObject root = new JSONObject();
+        root.put("id", arg0);
+        root.put("name", arg1);
+        root.put("status", arg2);
+
+        response = RestAssured.given().baseUri(config.GetProperty("pets.uri")).basePath(endpoint).accept(ContentType.JSON).contentType(ContentType.JSON).body(root.toJSONString()).put().thenReturn();
+        presp = response.as(GetPetResponse.class);
+    }
+
+    @And("pet ID {int} should have the status {string}")
+    public void petIDShouldHaveTheStatus(int arg0, String arg1)
+    {
+        MatcherAssert.assertThat(presp.getId(), Matchers.is(arg0));
+        MatcherAssert.assertThat(presp.getStatus(), Matchers.is(arg1));
+    }
+
+    @And("pet ID {int} should have the name {string}")
+    public void petIDShouldHaveTheName(int arg0, String arg1) {
+        // Write code here that turns the phrase above into concrete actions
+        MatcherAssert.assertThat(presp.getId(), Matchers.is(arg0));
+        MatcherAssert.assertThat(presp.getName(), Matchers.is(arg1));
+    }
+
+    @And("I should get an {string} message")
+    public void iShouldGetAnMessage(String arg0)
+    {
+        MatcherAssert.assertThat(response.jsonPath().getString("message"), Matchers.is(arg0));
+    }
+
+    @When("I try to update pet ID {string} with name {string} and status {string}")
+    public void iTryToUpdatePetIDWithNameAndStatus(String arg0, String arg1, String arg2) {
+        // Write code here that turns the phrase above into concrete actions
+        JSONObject root = new JSONObject();
+        root.put("id", arg0);
+        root.put("name", arg1);
+        root.put("status", arg2);
+
+        response = RestAssured.given().baseUri(config.GetProperty("pets.uri")).basePath(endpoint).accept(ContentType.JSON).contentType(ContentType.JSON).body(root.toJSONString()).put().thenReturn();
     }
 }
