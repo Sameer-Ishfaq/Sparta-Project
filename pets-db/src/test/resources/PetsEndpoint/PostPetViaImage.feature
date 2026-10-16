@@ -4,12 +4,13 @@ Feature:
   so that each pet can be visualised by users
 
   @Happy
-  Scenario:
+  Scenario: Upload an image for an existing pet
     Given i upload a valid petID information with an image
     When i send a POST request
     Then the response code should be 200
 
-    @Sad
+  @Sad
+  Scenario: Attempt to update a pet using POST
     Given i update a pets information
     When i send a POST request to /pet
-    Then the response code shoulde be 400
+    Then the response code should be 400
