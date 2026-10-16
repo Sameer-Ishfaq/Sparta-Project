@@ -24,3 +24,4 @@ Feature: User Stories for /user/
       |username|phone_number|
       |user_01 |00000000000 |
       |user_2  |12121212121 |
+

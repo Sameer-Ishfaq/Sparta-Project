@@ -21,3 +21,4 @@ Feature: User Stories for /user/
     Examples:
       |username|
       |user_01 |
+
