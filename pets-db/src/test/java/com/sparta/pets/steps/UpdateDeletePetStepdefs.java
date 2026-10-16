@@ -3,7 +3,6 @@ package com.sparta.pets.steps;
 import com.sparta.pets.pojo.GetPet.GetPetResponse;
 import com.sparta.pets.util.PetsAPIConfig;
 import io.cucumber.java.BeforeAll;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,18 +16,18 @@ import org.json.simple.JSONObject;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class UpdateDeletePetStepdefs
 {
+    private static final String DEFAULT_ENDPOINT = "/pet";
     private static final String UPDATED_NAME = "Buddy Updated";
     private static final String UPDATED_STATUS = "sold";
 
     private static PetsAPIConfig config;
     private GetPetResponse presp;
 
-    private String endpoint;
-    private int petId;
+    private String endpoint = DEFAULT_ENDPOINT;
+    private long petId;
     private Response response;
 
     @BeforeAll
@@ -41,6 +40,12 @@ public class UpdateDeletePetStepdefs
     @Given("I am using the pet api with path set to {string}")
     public void iAmUsingThePetApiWithPathSetTo(String path)
     {
+        if (path == null || path.isBlank())
+        {
+            endpoint = DEFAULT_ENDPOINT;
+            return;
+        }
+
         endpoint = path.startsWith("/") ? path : "/" + path;
     }
 
@@ -64,8 +69,8 @@ public class UpdateDeletePetStepdefs
         petId = id;
 
         Response lookupResponse = RestAssured.given()
-                .baseUri(config.GetProperty("pets.uri"))
-                .basePath(endpoint)
+                .baseUri(baseUri())
+                .basePath(basePath())
                 .pathParam("petId", petId)
                 .when()
                 .get("/{petId}");
@@ -82,7 +87,7 @@ public class UpdateDeletePetStepdefs
         petId = id;
         response = RestAssured.given()
                 .baseUri(baseUri())
-                .basePath(endpoint)
+                .basePath(basePath())
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(petBody(petId, UPDATED_NAME, UPDATED_STATUS))
@@ -101,7 +106,7 @@ public class UpdateDeletePetStepdefs
 
         response = RestAssured.given()
                 .baseUri(baseUri())
-                .basePath(endpoint)
+                .basePath(basePath())
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(invalidPet)
@@ -114,13 +119,34 @@ public class UpdateDeletePetStepdefs
     {
         response = RestAssured.given()
                 .baseUri(baseUri())
-                .basePath(endpoint)
+                .basePath(basePath())
                 .pathParam("petId", petId)
                 .when()
                 .delete("/{petId}");
     }
 
-    @Then("^I should (?:get|receive) a (\\d+) response code$")
+    @When("I try to delete pet ID {string}")
+    public void iTryToDeletePetId(String requestedPetId)
+    {
+        try
+        {
+            petId = Long.parseLong(requestedPetId);
+        }
+        catch (NumberFormatException ignored)
+        {
+            // The invalid value must still be sent to the API so its error response can be tested.
+        }
+
+        response = RestAssured.given()
+                .baseUri(baseUri())
+                .basePath(basePath())
+                .accept(ContentType.JSON)
+                .pathParam("petId", requestedPetId)
+                .when()
+                .delete("/{petId}");
+    }
+
+    @Then("I should receive a {int} response code")
     public void iShouldReceiveAResponseCode(int expectedStatusCode)
     {
         MatcherAssert.assertThat(response.statusCode(), Matchers.is(expectedStatusCode));
@@ -142,11 +168,24 @@ public class UpdateDeletePetStepdefs
         MatcherAssert.assertThat(getPet(petId).statusCode(), Matchers.is(404));
     }
 
+    @And("pet ID {long} should no longer exist")
+    public void petIdShouldNoLongerExist(long id)
+    {
+        MatcherAssert.assertThat(getPet(id).statusCode(), Matchers.is(404));
+    }
+
+    @And("I should get an {string} message")
+    public void iShouldGetAnMessage(String expectedMessage)
+    {
+        String actualMessage = response.jsonPath().getString("message");
+        MatcherAssert.assertThat(actualMessage, Matchers.is(expectedMessage));
+    }
+
     private void createPet(long id, String name, String status)
     {
         Response createResponse = RestAssured.given()
                 .baseUri(baseUri())
-                .basePath(endpoint)
+                .basePath(basePath())
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(petBody(id, name, status))
@@ -163,7 +202,7 @@ public class UpdateDeletePetStepdefs
     {
         return RestAssured.given()
                 .baseUri(baseUri())
-                .basePath(endpoint)
+                .basePath(basePath())
                 .accept(ContentType.JSON)
                 .pathParam("petId", id)
                 .when()
@@ -194,7 +233,7 @@ public class UpdateDeletePetStepdefs
         root.put("name", arg1);
         root.put("status", arg2);
 
-        response = RestAssured.given().baseUri(config.GetProperty("pets.uri")).basePath(endpoint).accept(ContentType.JSON).contentType(ContentType.JSON).body(root.toJSONString()).put().thenReturn();
+        response = RestAssured.given().baseUri(baseUri()).basePath(basePath()).accept(ContentType.JSON).contentType(ContentType.JSON).body(root.toJSONString()).put().thenReturn();
         if (response.statusCode() == 200) presp = response.as(GetPetResponse.class);
     }
 
@@ -212,12 +251,6 @@ public class UpdateDeletePetStepdefs
         MatcherAssert.assertThat(presp.getName(), Matchers.is(arg1));
     }
 
-    @And("I should get an {string} message")
-    public void iShouldGetAnMessage(String arg0)
-    {
-        MatcherAssert.assertThat(response.jsonPath().getString("message"), Matchers.is(arg0));
-    }
-
     @When("I try to update pet ID {string} with name {string} and status {string}")
     public void iTryToUpdatePetIDWithNameAndStatus(String arg0, String arg1, String arg2) {
         // Write code here that turns the phrase above into concrete actions
@@ -226,6 +259,11 @@ public class UpdateDeletePetStepdefs
         root.put("name", arg1);
         root.put("status", arg2);
 
-        response = RestAssured.given().baseUri(config.GetProperty("pets.uri")).basePath(endpoint).accept(ContentType.JSON).contentType(ContentType.JSON).body(root.toJSONString()).put().thenReturn();
+        response = RestAssured.given().baseUri(baseUri()).basePath(basePath()).accept(ContentType.JSON).contentType(ContentType.JSON).body(root.toJSONString()).put().thenReturn();
+    }
+
+    private String basePath()
+    {
+        return endpoint == null || endpoint.isBlank() ? DEFAULT_ENDPOINT : endpoint;
     }
 }
