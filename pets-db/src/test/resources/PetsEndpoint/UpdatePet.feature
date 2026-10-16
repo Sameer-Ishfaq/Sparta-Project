@@ -10,10 +10,10 @@ Feature: Update Pet
   Scenario: Update an existing pet with valid details
     Given pet ID 1 exists
     When I send a PUT request to update pet ID 1 with valid details
-    Then I should get a 200 response code
+    Then I should receive a 200 response code
     And pet ID 1 should contain the updated details
 
   @Sad
   Scenario: Attempt to update a pet with an invalid ID
     When I send a PUT request with an invalid pet ID
-    Then I should get a 400 response code
+    Then I should receive a 400 response code

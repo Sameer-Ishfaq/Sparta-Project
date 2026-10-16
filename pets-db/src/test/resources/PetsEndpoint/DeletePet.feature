@@ -14,7 +14,12 @@ Feature: Delete Pet By ID
     And the pet should no longer exist in the database
 
   @Sad
-  Scenario: Delete a pet that does not exist
-    Given a pet ID does not exist in the database
+  Scenario Outline: Delete a pet that does not exist
+    Given a pet ID - <id> - does not exist in the database
     When I send a DELETE request to /pet/{petId}
     Then I should receive a 404 response code
+
+    Examples:
+    | id |
+    | -999 |
+    | -998 |

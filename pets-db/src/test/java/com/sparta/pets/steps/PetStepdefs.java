@@ -44,6 +44,8 @@ public class PetStepdefs
     private Map<String, Object> postRequestBody;
     private PostRequestType postRequestType;
 
+    private String petStatus;
+
     @BeforeAll
     public static void setup()
     {
@@ -225,5 +227,36 @@ public class PetStepdefs
     private String baseUri()
     {
         return config.GetProperty("pets.uri");
+    }
+
+    @And("the status is set to {string}")
+    public void theStatusIsSetTo(String status) {
+        this.petStatus = status;
+    }
+
+    @When("I send a get request to the endpoint using my status")
+    public void iSendAGETRequestToFindPetsByStatus() {
+        var uri = config.GetProperty("pets.uri");
+
+        resp = RestAssured.given()
+                .baseUri(uri)
+                .basePath(endpoint)
+                .queryParam("status", petStatus)
+                .accept("application/json")
+                .get()
+                .thenReturn();
+    }
+
+    @When("I send a GET request to the endpoint using my tags {string}")
+    public void iSendAGETRequestUsingMyTags(String tags) {
+        var uri = config.GetProperty("pets.uri");
+
+        resp = RestAssured.given()
+                .baseUri(uri)
+                .basePath(endpoint)
+                .queryParam("tags", tags.split("\\s*,\\s*"))
+                .accept("application/json")
+                .get()
+                .thenReturn();
     }
 }

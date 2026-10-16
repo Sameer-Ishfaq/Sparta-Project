@@ -12,5 +12,5 @@ Feature:
 
     Examples:
     |tags|status|
-    |tags|400|
+    |tags|200|
     |0, string|200|
