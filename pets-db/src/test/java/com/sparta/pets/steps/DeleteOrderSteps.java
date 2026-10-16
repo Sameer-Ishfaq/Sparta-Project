@@ -59,8 +59,7 @@ public class DeleteOrderSteps {
         );
     }
 
-
-    @When("I delete the order with id {int}")
+    @Given("I delete the order with id {int}")
     public void iDeleteTheOrderWithId(int orderId) {
         response = request()
                 .when()
@@ -99,20 +98,6 @@ public class DeleteOrderSteps {
         MatcherAssert.assertThat(
                 lookupResponse.jsonPath().getInt("id"),
                 Matchers.is(orderId)
-        );
-    }
-
-
-    @Given("I delete the order with id {int}")
-    public void iDeleteTheOrderWithIdInGiven(int orderId) {
-        Response deleteResponse = request()
-                .when()
-                .delete("/" + orderId)
-                .thenReturn();
-
-        MatcherAssert.assertThat(
-                deleteResponse.statusCode(),
-                Matchers.is(200)
         );
     }
 
