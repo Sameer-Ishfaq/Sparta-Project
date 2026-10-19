@@ -32,7 +32,7 @@ Feature: Find purchase order by ID
   @sad
   Scenario:  Retrieve an order with a non-numeric ID
     When I send a GET request to the "/store/order/abc" endpoint
-    Then the HTTP status code should be 404 Bad Request
+    Then the HTTP status code should be 400 Bad Request
 
   @sad
   Scenario: Use an unsupported method on the order ID endpoint
