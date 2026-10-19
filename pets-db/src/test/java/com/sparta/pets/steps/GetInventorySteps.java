@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class GetInventorySteps {
 
-    private static final String BASE_URI = "https://petstore.swagger.io/v2";
+    private static final String BASE_URI = "http://localhost:8080/api/v3";
 
     private String basePath;
     private Response response;
