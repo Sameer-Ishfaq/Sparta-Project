@@ -11,11 +11,7 @@ import org.hamcrest.Matchers;
 
 import java.util.Map;
 
-/**
- * The "details", "http code" and "user created" steps are shared with CreateUserList.feature
- * (and "I should get http code {int}" with LoginUser.feature and UpdateUserReference.feature),
- * so they work on the usernames and response held in {@link UserContext}.
- */
+
 public class UserCreateStepdefs {
 
     private final UserContext context;
