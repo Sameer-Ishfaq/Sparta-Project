@@ -15,19 +15,33 @@ import static org.hamcrest.Matchers.*;
 
 public class UpdateUserReferencesStepdefs {
     private String username;
+    private String invalidusername;
     private static final String BASE_URI = "http://localhost:8080/api/v3";
     private Response response;
 
     private final String user = """
     {
       "id": 173,
-      "username": "SCP173_DontBlink",
+      "username": "%s",
       "firstName": "Sculpture",
       "lastName": "Euclid",
       "email": "scp173@site19.example.com",
       "password": "Containment173!",
       "phone": "07700900173",
       "userStatus": 1
+    }
+    """;
+
+    private final String invalidUser = """
+    {
+      "id": "one-seven-three",
+      "username": "%s",
+      "firstName": "Sculpture",
+      "lastName": "Euclid",
+      "email": "scp173@site19.example.com",
+      "password": "Containment173!",
+      "phone": "07700900173",
+      "userStatus": "contained"
     }
     """;
 
@@ -38,7 +52,7 @@ public class UpdateUserReferencesStepdefs {
                 .given()
                     .baseUri(BASE_URI)
                     .contentType(ContentType.JSON)
-                    .body(user)
+                    .body(user.formatted(username))
                 .when()
                     .post("/user")
                 .then()
@@ -67,7 +81,7 @@ public class UpdateUserReferencesStepdefs {
                     .contentType(ContentType.JSON)
                     .body(user)
                 .when()
-                    .put("/user/" + username);
+                    .post("/user");
     }
 
     @Then("The accounts details should have been changed, I should get http code {int}")
@@ -75,27 +89,52 @@ public class UpdateUserReferencesStepdefs {
       int actualHttpCode = response.statusCode();
       assertThat(actualHttpCode, is(expectedCode));
     }
+    //======================================== Sad Scenario
 
-//    @And("I send a GET request to see if it successfully made a new user for this")
-//    public void iSendAGETRequestToSeeIfItSuccessfullyMadeANewUserForThis() {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
-//
-//
-//
-//    @When("I send a PUT request to change my details with incorrect details")
-//    public void iSendAPUTRequestToChangeMyDetailsWithIncorrectDetails() {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
-//
-//    @Then("I should get a http status of {int}")
-//    public void iShouldGetAHttpStatusOf(int arg0) {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
-//
+    @Given("I have created a new user for invalid details")
+    public void iHaveCreatedANewUserForInvalidDetails(){
+        invalidusername = "peanut";
+        RestAssured
+                .given()
+                    .baseUri(BASE_URI)
+                    .contentType(ContentType.JSON)
+                    .body(user.formatted(username))
+                .when()
+                    .post("/user")
+                .then()
+                     .statusCode(200);
+    }
+
+    @And("I send a GET request to see if it successfully made a new user for this")
+    public void iSendAGETRequestToSeeIfItSuccessfullyMadeANewUserForThis() {
+        response = RestAssured
+                .given()
+                    .baseUri(BASE_URI)
+                .when()
+                    .get("/user/" + username);
+
+        response.then().statusCode(200);
+
+    }
+
+    @When("I send a PUT request to change my details with incorrect details")
+    public void iSendAPUTRequestToChangeMyDetailsWithIncorrectDetails() {
+        response = RestAssured
+                .given()
+                    .baseUri(BASE_URI)
+                    .contentType(ContentType.JSON)
+                    .body(invalidUser.formatted(username))
+                .when()
+                    .put("/user/" + username);
+    }
+
+    @Then("I should get a http status of {int}")
+    public void iShouldGetAHttpStatusOf(int expectedHttpCode) {
+        int actualHttpCode = response.statusCode();
+        assertThat(actualHttpCode, is(expectedHttpCode));
+
+    }
+
 //    @Given("I have a {string} that does not exist")
 //    public void iHaveAThatDoesNotExist(String arg0) {
 //        // Write code here that turns the phrase above into concrete actions

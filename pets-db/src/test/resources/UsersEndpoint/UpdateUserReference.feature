@@ -10,13 +10,13 @@ Feature: User Stories for /user/
 
   @Sad
   Scenario: Updating a user with invalid details
-    Given I have created a new user
+    Given I have created a new user for invalid details
     And I send a GET request to see if it successfully made a new user for this
     When I send a PUT request to change my details with incorrect details
     Then I should get a http status of 400
 
   @Sad
-  Scenario Outline: Updaing a user that does not exist
+  Scenario Outline: Updating a user that does not exist
     Given I have a "<username>" that does not exist
     When I send a PUT request to change the details of the nonexistent user
     Then I should get a http status of 404
