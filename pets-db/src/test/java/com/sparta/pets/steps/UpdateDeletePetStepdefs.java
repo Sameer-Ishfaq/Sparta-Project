@@ -37,6 +37,13 @@ public class UpdateDeletePetStepdefs
         config.LoadFromFile();
     }
 
+    @When("I try to delete pet ID {int}")
+    public void iTryToDeletePetID(int arg0)
+    {
+        // Write code here that turns the phrase above into concrete actions
+        response = RestAssured.given().accept("application/json").baseUri(config.GetProperty("pets.uri")).basePath("/pet/" + arg0).delete().thenReturn();
+    }
+
     @Given("I am using the pet api with path set to {string}")
     public void iAmUsingThePetApiWithPathSetTo(String path)
     {
