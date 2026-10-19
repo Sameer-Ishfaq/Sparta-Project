@@ -133,7 +133,7 @@ public class PetStepdefs
                     .baseUri(baseUri())
                     .accept(ContentType.JSON)
                     .pathParam("petId", postPetId)
-                    .multiPart("file", "pet-image.png", TEST_IMAGE, "image/png")
+                    .multiPart("file", "pet.png", TEST_IMAGE, "image/png")
                     .multiPart("additionalMetadata", "Image uploaded by Cucumber test")
                     .when()
                     .post("/pet/{petId}/uploadImage");

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PlaceOrderSteps {
 
-    private static final String BASE_URI = "https://petstore.swagger.io/v3";
+    private static final String BASE_URI = "https://petstore.swagger.io/v2";
 
     private String requestBody;
     private int orderId;

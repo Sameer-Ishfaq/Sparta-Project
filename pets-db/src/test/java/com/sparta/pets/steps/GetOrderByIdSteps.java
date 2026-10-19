@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GetOrderByIdSteps {
 
-    private static final String BASE_URI = "https://petstore.swagger.io/v3";
+    private static final String BASE_URI = "https://petstore.swagger.io/v2";
 
     private String storedOrderJson;
     private int orderId;
