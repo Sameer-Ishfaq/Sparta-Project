@@ -35,6 +35,7 @@ public class DeleteUserResourceStepdefs {
     """;
     private String username;
     private String name;
+    private String sad_username = "drift_all_you_like";
 
     @Given("I have created a user that now exists")
     public void iHaveCreatedAUserThatNowExists() {
@@ -73,15 +74,4 @@ public class DeleteUserResourceStepdefs {
         assertThat(actualHttpCode, is(expectedCode));
     }
 
-//    @Given("I want to delete a user with the username {string}")
-//    public void iWantToDeleteAUserWithTheUsername(String arg0) {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
-//
-//    @When("I want to \\\\\\/user\\\\\\/\\\\\\{username}")
-//    public void iWantToUserUsername() {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
 }

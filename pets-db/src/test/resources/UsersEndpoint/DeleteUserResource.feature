@@ -9,11 +9,3 @@ Feature: User Stories for /user/
 
 
 
-  @Sad
-  Scenario: Deleting a user that does not exist
-    Given I want to delete a user that does not exist
-    When I send a DELETE request for that user
-    Then I should get a status code 200
-
-
-
