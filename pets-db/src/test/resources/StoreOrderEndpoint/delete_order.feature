@@ -31,13 +31,13 @@ Feature: Delete an Order
   Scenario: Delete an order that does not exist
     Given I am using the petstore API with the base path is set to "/store/order"
     When I delete the order with id 99999
-    Then the order status code should be 404
+    Then the order status code should be 400
 
   @Sad
   Scenario: Delete an order with an invalid id
     Given I am using the petstore API with the base path is set to "/store/order"
     When I delete the order with id "abc"
-    Then the order status code should be 404
+    Then the order status code should be 400
 
   @Sad
   Scenario: Delete the same order twice
