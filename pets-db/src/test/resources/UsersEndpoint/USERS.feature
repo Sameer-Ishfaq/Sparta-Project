@@ -118,7 +118,7 @@ As a user of the Petstore
   @Sad
   Scenario Outline: Login User when incorrect details Entered
     Given I want to Login to account <username>
-    When I add a non Existing username or password
+    When I add a non Existing username or password <password>
     And I GET user/login
     Then I am Given http code 400 "	Invalid username/password supplied"
     And I am unable to access the Account
@@ -132,7 +132,7 @@ As a user of the Petstore
 
 
   @Happy
-  Scenario: Login User when Incorrect Details are Entered
+  Scenario: Logout User
     Given I want to Logout of account
     When I am logged in as a user
     And I request GET user/Logout
