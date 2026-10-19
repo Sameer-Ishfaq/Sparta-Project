@@ -4,7 +4,7 @@
 
 This repository was created for the Sparta Global API Testing Mini Project.
 
-The aim was to build a reusable test framework for the Swagger PetStore API during one sprint. The project was completed by our group using Git, GitHub, Maven , Docker , IntelliJ , Trello , Java, Cucumber, Pet store API Docs & Postman.
+The aim was to build a reusable test framework for the Swagger PetStore API during one sprint. The project was completed by our group using Git, GitHub, Maven , Docker , IntelliJ , Trello , Java, Cucumber, Swagger API & Postman.
 
 The framework sends requests to the API and checks that each response is correct. It covers successful requests (happy paths) and expected failures (sad paths).
 
@@ -24,13 +24,12 @@ The tests are written as readable Cucumber scenarios using `Given`, `When`, and 
 
 ## Tools and working method
 
-1. Java 21 and Maven
+1. Java 26 and Maven
 2. REST Assured for API requests
 3. Cucumber for feature files
 4. JUnit and Hamcrest for checks
 5. Git and GitHub for version control
-6. Trello for Scrum planning and task management
-7. IntelliJ IDEA for development and UML generation
+6. IntelliJ IDEA for development and UML generation
 
 The project lasted one sprint and was completed by a team of 8 people. The team used Trello to organise user stories, development tasks, reviews, and defects. Standup meetings were held throughout each day to discuss progress, blockers, and the next tasks. The completed framework was prepared for a 15 to 20 minute demonstration.
 
@@ -61,8 +60,8 @@ ALL secret files and keys are placed in git ignore file.
 
 ## Adding a test
 
-1. Add a user story and test case to the project board.
-2. Add a scenario to the correct feature folder.
+1. Add user story and Create scenario
+2. Add corresponding test case to scenario
 3. Reuse an existing Java step or add one under `com.sparta.pets.steps`.
 4. Validate the status code and important response fields.
 5. Run the affected suite and review its report.
