@@ -41,8 +41,7 @@ public class UserLogoutStepdef {
         MatcherAssert.assertThat("Could not log in before logging out", loginResponse.statusCode(), Matchers.is(200));
     }
 
-    // Regex used because "/" is an alternation character in Cucumber expressions.
-    // The path is case-sensitive: /user/Logout returns 500, so the request uses /user/logout.
+
     @And("^I request GET user/Logout$")
     public void iRequestGetUserLogout() {
         logoutResponse = context.request()
@@ -69,10 +68,9 @@ public class UserLogoutStepdef {
 
     @When("I am not logged in as a user")
     public void iAmNotLoggedInAsAUser() {
-        // Deliberately no login request, so there is no session to log out of
+
     }
 
-    // "default Unexpected failure" is the Swagger docs' name for the catch-all error response
     @Then("I get http code {string}")
     public void iGetHttpCode(String message) {
         MatcherAssert.assertThat(message, logoutResponse.statusCode(), Matchers.greaterThanOrEqualTo(400));

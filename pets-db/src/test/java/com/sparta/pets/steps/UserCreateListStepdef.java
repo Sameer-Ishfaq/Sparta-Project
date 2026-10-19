@@ -6,10 +6,7 @@ import io.restassured.http.ContentType;
 
 import java.util.Arrays;
 
-/**
- * The details, "http code" and "user created" steps are defined in UserCreateStepdefs
- * and reused here through the shared {@link UserContext}.
- */
+
 public class UserCreateListStepdef {
 
     private final UserContext context;
@@ -26,9 +23,6 @@ public class UserCreateListStepdef {
         context.getUsernames().addAll(Arrays.asList(list.split(",")));
     }
 
-    // Optional leading slash because the sad scenario omits it.
-    // The real endpoint is POST /user/createWithList; the list in the step text is
-    // descriptive only - the users built by the details step are sent in the body.
     @And("^I post to /?user/createdWithList/.+$")
     public void iPostToCreatedWithList() {
         context.setResponse(context.request()

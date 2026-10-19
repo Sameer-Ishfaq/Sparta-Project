@@ -10,12 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * State shared between the user step definition classes within one scenario.
- * PicoContainer creates a fresh instance per scenario and passes the same one to
- * every step class constructor that asks for it, so steps reused across features
- * (e.g. "I should get http code {int}") can read the response another class stored.
- */
+
 public class UserContext {
 
     private static final String BASE_URI = loadBaseUri();
@@ -27,7 +22,7 @@ public class UserContext {
     private static String loadBaseUri() {
         PetsAPIConfig config = new PetsAPIConfig();
         config.LoadFromFile();
-        return config.GetProperty("pets.uri");
+        return config.GetProperty("docker.uri");
     }
 
     public RequestSpecification request() {

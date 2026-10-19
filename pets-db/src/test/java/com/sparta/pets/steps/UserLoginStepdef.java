@@ -7,10 +7,6 @@ import io.cucumber.java.en.When;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
-/**
- * "I should get http code {int}" is defined in UserCreateStepdefs and reused here,
- * so the login response is stored in the shared {@link UserContext}.
- */
 public class UserLoginStepdef {
 
     private static final String SESSION_MESSAGE = "Logged in user session";
