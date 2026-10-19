@@ -73,5 +73,4 @@ public class DeleteUserResourceStepdefs {
         int actualHttpCode = response.statusCode();
         assertThat(actualHttpCode, is(expectedCode));
     }
-
 }
