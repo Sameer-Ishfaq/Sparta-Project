@@ -15,16 +15,3 @@ Feature: User Stories for /user/
     When I send a PUT request to change my details with incorrect details
     Then I should get a http status of 400
 
-  @Sad
-  Scenario Outline: Updating a user that does not exist
-    Given I have a "<username>" that does not exist
-    When I send a PUT request to change the details of the nonexistent user
-    Then I should get a http status of 404
-
-    Examples:
-      | username             |
-      | SCP173_DontBlink     |
-      | DClass_9341          |
-      | MTF_Epsilon11        |
-      | Site19_Researcher    |
-

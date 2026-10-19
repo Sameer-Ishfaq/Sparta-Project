@@ -20,55 +20,55 @@ public class UpdateUserReferencesStepdefs {
     private Response response;
 
     private final String user = """
-    {
-      "id": 173,
-      "username": "%s",
-      "firstName": "Sculpture",
-      "lastName": "Euclid",
-      "email": "scp173@site19.example.com",
-      "password": "Containment173!",
-      "phone": "07700900173",
-      "userStatus": 1
-    }
-    """;
+            {
+              "id": 173,
+              "username": "%s",
+              "firstName": "Sculpture",
+              "lastName": "Euclid",
+              "email": "scp173@site19.example.com",
+              "password": "Containment173!",
+              "phone": "07700900173",
+              "userStatus": 1
+            }
+            """;
 
     private final String invalidUser = """
-    {
-      "id": "one-seven-three",
-      "username": "%s",
-      "firstName": "Sculpture",
-      "lastName": "Euclid",
-      "email": "scp173@site19.example.com",
-      "password": "Containment173!",
-      "phone": "07700900173",
-      "userStatus": "contained"
-    }
-    """;
+            {
+              "id": "one-seven-three",
+              "username": "%s",
+              "firstName": "Sculpture",
+              "lastName": "Euclid",
+              "email": "scp173@site19.example.com",
+              "password": "Containment173!",
+              "phone": "07700900173",
+              "userStatus": "contained"
+            }
+            """;
 
     @Given("I have created a new user")
     public void iHaveCreatedANewUser() {
         username = "SCP173_DontBlink";
         RestAssured
                 .given()
-                    .baseUri(BASE_URI)
-                    .contentType(ContentType.JSON)
-                    .body(user.formatted(username))
+                .baseUri(BASE_URI)
+                .contentType(ContentType.JSON)
+                .body(user.formatted(username))
                 .when()
-                    .post("/user")
+                .post("/user")
                 .then()
-                    .statusCode(200);
+                .statusCode(200);
     }
 
     @And("I send a GET request to see if it successfully made a new user")
     public void iSendAGETRequestToSeeIfItSuccessfullyMadeANewUser() {
         response = RestAssured
                 .given()
-                    .baseUri(BASE_URI)
+                .baseUri(BASE_URI)
                 .when()
-                    .get("/user/" + username);
-                response.then()
-                        .statusCode(200)
-                        .body("username", equalTo(username));
+                .get("/user/" + username);
+        response.then()
+                .statusCode(200)
+                .body("username", equalTo(username));
 
 
     }
@@ -77,41 +77,41 @@ public class UpdateUserReferencesStepdefs {
     public void iSendAPUTRequestToChangeMyDetails() {
         response = RestAssured
                 .given()
-                    .baseUri(BASE_URI)
-                    .contentType(ContentType.JSON)
-                    .body(user)
+                .baseUri(BASE_URI)
+                .contentType(ContentType.JSON)
+                .body(user)
                 .when()
-                    .post("/user");
+                .post("/user");
     }
 
     @Then("The accounts details should have been changed, I should get http code {int}")
     public void theAccountsDetailsShouldHaveBeenChangedIShouldGetHttpCode(int expectedCode) {
-      int actualHttpCode = response.statusCode();
-      assertThat(actualHttpCode, is(expectedCode));
+        int actualHttpCode = response.statusCode();
+        assertThat(actualHttpCode, is(expectedCode));
     }
     //======================================== Sad Scenario
 
     @Given("I have created a new user for invalid details")
-    public void iHaveCreatedANewUserForInvalidDetails(){
+    public void iHaveCreatedANewUserForInvalidDetails() {
         invalidusername = "peanut";
         RestAssured
                 .given()
-                    .baseUri(BASE_URI)
-                    .contentType(ContentType.JSON)
-                    .body(user.formatted(username))
+                .baseUri(BASE_URI)
+                .contentType(ContentType.JSON)
+                .body(user.formatted(username))
                 .when()
-                    .post("/user")
+                .post("/user")
                 .then()
-                     .statusCode(200);
+                .statusCode(200);
     }
 
     @And("I send a GET request to see if it successfully made a new user for this")
     public void iSendAGETRequestToSeeIfItSuccessfullyMadeANewUserForThis() {
         response = RestAssured
                 .given()
-                    .baseUri(BASE_URI)
+                .baseUri(BASE_URI)
                 .when()
-                    .get("/user/" + username);
+                .get("/user/" + username);
 
         response.then().statusCode(200);
 
@@ -121,11 +121,11 @@ public class UpdateUserReferencesStepdefs {
     public void iSendAPUTRequestToChangeMyDetailsWithIncorrectDetails() {
         response = RestAssured
                 .given()
-                    .baseUri(BASE_URI)
-                    .contentType(ContentType.JSON)
-                    .body(invalidUser.formatted(username))
+                .baseUri(BASE_URI)
+                .contentType(ContentType.JSON)
+                .body(invalidUser.formatted(username))
                 .when()
-                    .put("/user/" + username);
+                .put("/user/" + username);
     }
 
     @Then("I should get a http status of {int}")
@@ -135,15 +135,4 @@ public class UpdateUserReferencesStepdefs {
 
     }
 
-//    @Given("I have a {string} that does not exist")
-//    public void iHaveAThatDoesNotExist(String arg0) {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
-//
-//    @When("I send a PUT request to change the details of the nonexistent user")
-//    public void iSendAPUTRequestToChangeTheDetailsOfTheNonexistentUser() {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new PendingException();
-//    }
 }
