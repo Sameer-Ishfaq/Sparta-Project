@@ -22,6 +22,14 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class PetStepdefs
 {
+
+    @Given("the pet with status {string} and id {int} exists")
+    public void andThePetWithStatusAndIdExists(String arg0, int arg1)
+    {
+        // Write code here that turns the phrase above into concrete actions
+        createPet(arg1, "doggie", arg0);
+    }
+
     private enum PostRequestType
     {
         ADD_PET,
@@ -39,7 +47,7 @@ public class PetStepdefs
     private static PetsAPIConfig config;
     private String endpoint;
     private int id;
-    private long postPetId;
+    private int postPetId;
     private String postPetName;
     private Map<String, Object> postRequestBody;
     private PostRequestType postRequestType;
@@ -93,7 +101,7 @@ public class PetStepdefs
     @Given("i add a pet with the valid information")
     public void iAddAPetWithTheValidInformation()
     {
-        postPetId = NEXT_PET_ID.incrementAndGet();
+        postPetId = 1000;
         postPetName = "Cucumber Test Pet";
         postRequestBody = petBody(postPetId, postPetName, "available");
         postRequestType = PostRequestType.ADD_PET;
@@ -102,7 +110,7 @@ public class PetStepdefs
     @Given("I add a pet with the invalid information in the correct format")
     public void iAddAPetWithTheInvalidInformationInTheCorrectFormat()
     {
-        postPetId = NEXT_PET_ID.incrementAndGet();
+        postPetId = -99999;
         postRequestBody = petBody(postPetId, "", "not-a-valid-status");
         postRequestType = PostRequestType.ADD_INVALID_PET;
     }
@@ -110,7 +118,7 @@ public class PetStepdefs
     @Given("i upload a valid petID information with an image")
     public void iUploadAValidPetIdInformationWithAnImage()
     {
-        postPetId = NEXT_PET_ID.incrementAndGet();
+        postPetId = 1;
         createPet(postPetId, "Pet With Image", "available");
         postRequestType = PostRequestType.UPLOAD_IMAGE;
     }
@@ -118,7 +126,7 @@ public class PetStepdefs
     @Given("i update a pets information")
     public void iUpdateAPetsInformation()
     {
-        postPetId = NEXT_PET_ID.incrementAndGet();
+        postPetId = 1000;
         createPet(postPetId, "Pet Before Update", "available");
         postRequestBody = petBody(postPetId, "Pet Updated With Post", "sold");
         postRequestType = PostRequestType.UPDATE_PET_WITH_POST;

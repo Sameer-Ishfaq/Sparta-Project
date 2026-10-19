@@ -5,6 +5,7 @@ Feature:
 
   @Happy
   Scenario Outline: Search using a valid status
+    Given the pet with status "<status>" and id 1 exists
     When the endpoint is set to "/pet/findByStatus"
     And the status is set to "<status>"
     And I send a get request to the endpoint using my status

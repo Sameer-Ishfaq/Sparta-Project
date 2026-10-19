@@ -6,6 +6,7 @@ Feature: Search for pet by ID
   @Happy
   Scenario Outline:
     Given I am searching for a pet using a valid ID <id>
+    And the pet with status "available" and id <id> exists
     And the endpoint is set to "/pet"
     When I send a GET request to the endpoint using my ID
     Then status code 200 should be returned
