@@ -52,7 +52,7 @@ A task is complete when its code and scenarios are finished, the affected test s
 
 ## Class diagram
 
-> **UML DIAGRAM GOES HERE**
+![UML class diagram for the PetStore API test framework](./docs/uml_diagram.png)
 
 ## Security
 
