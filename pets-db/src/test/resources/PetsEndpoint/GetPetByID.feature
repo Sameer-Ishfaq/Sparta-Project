@@ -14,7 +14,7 @@ Feature: Search for pet by ID
 
     Examples:
     | id | name |
-    | 10 | "Rufus" |
+    | 10 | "doggie" |
 
     @Sad
     Scenario Outline:
