@@ -3,23 +3,22 @@ Feature: User Stories for /user/
 
   @Happy
   Scenario Outline: Deleting an existing user
-    Given am logged in an existing user "<username>"
+    Given I have created a user that now exists
+    And I want to delete the created "<username>"
     When I DELETE /user/{username} of "<username>"
-    Then I should get a status code 200
+    Then I should get a status code {int}
 
     Examples:
       |username|
-      |user_01 |
+      |Test_user_67|
 
   @Sad
-  Scenario Outline: Deleting a user being logged out
-    Given I am logged out using "<username>"
-    And I want to delete the user
-    When I DELETE /user/{username} of my user
-    Then I should get a status code 401
+  Scenario Outline: Deleting a user that does not exist
+    Given I want to delete a user with the username "<username>"
+    When I want to \\/user\\/\\{username}
+    Then I should get a status code {int}
 
     Examples:
-      |username|
-      |user_01 |
-
+      | username                           |
+      | I_hope_this_is_not_a_real_username |
 
