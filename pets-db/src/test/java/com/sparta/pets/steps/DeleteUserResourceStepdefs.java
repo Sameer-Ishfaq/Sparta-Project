@@ -13,7 +13,6 @@ import io.restassured.response.Response;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-
 public class DeleteUserResourceStepdefs {
     private Response response;
     private static PetsAPIConfig config;
@@ -73,4 +72,7 @@ public class DeleteUserResourceStepdefs {
         int actualHttpCode = response.statusCode();
         assertThat(actualHttpCode, is(expectedCode));
     }
+
+    //TODO: Add extra tests for this
+    //
 }

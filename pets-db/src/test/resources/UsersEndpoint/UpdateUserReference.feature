@@ -2,27 +2,29 @@ Feature: User Stories for /user/
   I want to update information about a users account
 
   @Happy
-  Scenario Outline: Updating an existing user
-    Given I am logged in as an existing user "<username>"
-    And I want to update my phone number on my account
-    And I have recorded the current users phone number using a GET request
-    When  I send a PUT request to change my details to "<new_phone>",
-    Then I should get http code 200
-    And The accounts phone number should be changed to my new phone number "<new_phone>"
-
-    Examples:
-      |username|new_phone|
-      |user01  |01952773812|
+  Scenario: Updating an existing user
+    Given I have created a new user
+    And I send a GET request to see if it successfully made a new user
+    When  I send a PUT request to change my details
+    Then The accounts details should have been changed, I should get http code 200
 
   @Sad
-  Scenario Outline: Updating a user with invalid details
-    Given I am logged in as an existing user "<username>"
-    When I want to update my "<phone_number>" on my account using PUT
+  Scenario: Updating a user with invalid details
+    Given I have created a new user
+    And I send a GET request to see if it successfully made a new user for this
+    When I send a PUT request to change my details with incorrect details
     Then I should get a http status of 400
 
-    Examples:
-      |username|phone_number|
-      |user_01 |00000000000 |
-      |user_2  |12121212121 |
+  @Sad
+  Scenario Outline: Updaing a user that does not exist
+    Given I have a "<username>" that does not exist
+    When I send a PUT request to change the details of the nonexistent user
+    Then I should get a http status of 404
 
+    Examples:
+      | username             |
+      | SCP173_DontBlink     |
+      | DClass_9341          |
+      | MTF_Epsilon11        |
+      | Site19_Researcher    |
 
