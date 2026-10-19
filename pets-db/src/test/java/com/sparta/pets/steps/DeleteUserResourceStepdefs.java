@@ -15,7 +15,6 @@ import static org.hamcrest.Matchers.*;
 
 public class DeleteUserResourceStepdefs {
     private Response response;
-    private static PetsAPIConfig config;
     private static final String BASE_URI = "http://localhost:8080/api/v3";
 
 //This file relies on Docker container to be run, hense why the BASE_URI is local host
